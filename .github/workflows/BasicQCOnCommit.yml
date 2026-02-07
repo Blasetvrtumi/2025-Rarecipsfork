@@ -31,12 +31,18 @@ jobs:
         working-directory: ./backend
         run: mvn clean compile
 
+      - name: Create env.properties from secrets
+        working-directory: ./backend/src/main/resources
+        run: |
+          echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" > env.properties
+          echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> env.properties
+
       - name: Run Unit Tests
         working-directory: ./backend
         run: |
-          mvn test -Dtest="**/unit/**/*Test" -Dsurefire.failIfNoSpecifiedTests=false || \
-          mvn test -Dtest="**/*Test" -Dgroups="unit" -Dsurefire.failIfNoSpecifiedTests=false || \
-          mvn test -Dsurefire.failIfNoSpecifiedTests=false
+          mvn clean test -Dtest="**/unit/**/*Test" -Dsurefire.failIfNoSpecifiedTests=false || \
+          mvn clean test -Dtest="**/*Test" -Dgroups="unit" -Dsurefire.failIfNoSpecifiedTests=false || \
+          mvn clean test -Dsurefire.failIfNoSpecifiedTests=false
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
