@@ -23,6 +23,7 @@ public class BaseE2ETest {
     @BeforeEach
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
+        options.setAcceptInsecureCerts(true);
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
