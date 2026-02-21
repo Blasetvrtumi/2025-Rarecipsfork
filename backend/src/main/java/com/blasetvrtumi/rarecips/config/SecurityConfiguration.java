@@ -54,7 +54,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**", "/api/v1/public/**", "/swagger-ui/**", "/v3/api-docs/**")
+                        .requestMatchers("/api/v1/auth/**", "/api/v1/public/**", "/swagger-ui/**", "/v3/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/recipes/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/ingredients/**").permitAll()
@@ -66,6 +66,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/v1/activities/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/users/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/recipes/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/ingredients/**").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/ingredients/**").hasAnyRole("ADMIN")
                         .requestMatchers("/api/v1/collections/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated());
 
