@@ -18,7 +18,7 @@ public class BaseE2ETest {
 
     protected WebDriver driver;
 
-    protected String baseUrl = "http://localhost:4200";
+    protected String baseUrl = "https://localhost:4200";
 
     @BeforeEach
     public void setUp() {
