@@ -18,7 +18,7 @@ public class BaseUnitTest {
 
     protected WebDriver driver;
 
-    protected String baseUrl = "http://localhost:4200"; //Angular endpoint
+    protected String baseUrl = "https://localhost:4200"; //Angular endpoint
 
     @BeforeEach
     public void setUp() {
