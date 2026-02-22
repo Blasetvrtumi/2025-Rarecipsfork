@@ -12,7 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 import com.blasetvrtumi.rarecips.RarecipsApplication;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, classes = RarecipsApplication.class)
-@DirtiesContext
 @ActiveProfiles("test")
 public class BaseUnitTest {
 
