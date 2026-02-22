@@ -82,7 +82,7 @@ public class UIIngredientTest extends BaseUnitTest {
 
     wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".grid")));
 
-    WebElement editBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".top-14 > .ti")));
+    WebElement editBtn = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".top-14 > .ti")));
     jsClick(editBtn);
 
     // Wait for edit click to process

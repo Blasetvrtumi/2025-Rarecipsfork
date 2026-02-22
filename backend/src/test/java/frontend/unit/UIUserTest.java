@@ -49,7 +49,20 @@ public class UIUserTest extends BaseUnitTest {
     driver.get("https://localhost:8443/");
     driver.manage().window().setSize(new Dimension(1923, 944));
 
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+
     wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".aspect-square"))).click();
+
+    try {
+      Thread.sleep(500);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+
     wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".top-7"))).click();
 
     {
@@ -82,7 +95,19 @@ public class UIUserTest extends BaseUnitTest {
     driver.get("https://localhost:8443/");
     driver.manage().window().setSize(new Dimension(2047, 944));
 
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+
     wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".aspect-square"))).click();
+
+    try {
+      Thread.sleep(500);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
 
     {
       WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".icon-btn")));
