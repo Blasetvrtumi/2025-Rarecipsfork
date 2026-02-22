@@ -18,13 +18,13 @@ public class BaseUnitTest {
 
     protected WebDriver driver;
 
-    protected String baseUrl = "https://localhost:4200"; //Angular endpoint
+    protected String baseUrl = "https://localhost:8443"; //Angular endpoint
 
     @BeforeEach
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");

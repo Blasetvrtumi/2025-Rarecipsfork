@@ -1,7 +1,8 @@
 name: Docker image creation and push to Dockerhub on release
 
 on:
-  workflow_dispatch:
+  release:
+    types: [ published ]
 
 jobs:
 

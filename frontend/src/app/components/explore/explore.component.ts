@@ -13,6 +13,7 @@ import {RecipeCollectionService} from '../../services/recipe-collection.service'
 import {CollectionCardComponent} from '../shared/collection-card/collection-card.component';
 import { TranslatorService } from '../../services/translator.service';
 import {ThemeService} from '../../services/theme.service';
+import {Title} from '@angular/platform-browser';
 
 interface Recipe {
   id: string;
@@ -286,11 +287,20 @@ export class ExploreComponent implements OnInit {
     private ingredientIconService: IngredientIconService,
     private collectionService: RecipeCollectionService,
     private cdr: ChangeDetectorRef,
-    public translatorService: TranslatorService
+    public translatorService: TranslatorService,
+    private titleService: Title
   ) {
   }
 
+  updateTitle() {
+    this.titleService.setTitle(this.translatorService.translate('title_explore'));
+  }
+
   ngOnInit(): void {
+    this.updateTitle();
+    this.translatorService.onChange(() => {
+      this.updateTitle();
+    });
     this.logos = this.themeService.getLogos();
 
 

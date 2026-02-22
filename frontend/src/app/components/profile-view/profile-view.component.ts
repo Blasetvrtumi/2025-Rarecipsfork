@@ -9,6 +9,7 @@ import {RecipeCollectionService} from '../../services/recipe-collection.service'
 import {TranslatorService} from '../../services/translator.service';
 import {filter, firstValueFrom} from 'rxjs';
 import {ActivityService} from '../../services/activity.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile-view',
@@ -76,11 +77,18 @@ export class ProfileViewComponent implements OnInit {
     private collectionService: RecipeCollectionService,
     private activityService: ActivityService,
     private cdr: ChangeDetectorRef,
-    private translatorService: TranslatorService
+    private translatorService: TranslatorService,
+    private titleService: Title
   ) {}
 
   t(key: string) {
     return this.translatorService.translate(key);
+  }
+
+  updateTitle() {
+    if (this.user?.username) {
+      this.titleService.setTitle(this.t('title_user') + this.user.username);
+    }
   }
 
   ngOnInit(): void {
@@ -98,6 +106,7 @@ export class ProfileViewComponent implements OnInit {
     });
 
     this.translatorService.onChange(() => {
+      this.updateTitle();
       if (this.router.url.includes('/users/') && this.creationDate) {
         this.dateString = new Intl.DateTimeFormat(this.translatorService.getLang(), {
           dateStyle: 'long'
@@ -115,6 +124,7 @@ export class ProfileViewComponent implements OnInit {
     this.userService.getUserByUsername(this.username).subscribe({
       next: (userData) => {
         this.user = userData;
+        this.updateTitle();
 
         this.isAdminProfile = this.user?.role?.includes('ADMIN');
 

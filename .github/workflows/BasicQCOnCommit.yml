@@ -1,7 +1,9 @@
 name: Basic Quality Control on Commit
 
 on:
-  workflow_dispatch:
+  push:
+    branches-ignore:
+      - main
 
 jobs:
 
@@ -59,10 +61,6 @@ jobs:
           echo $! > angular.pid
           sleep 30
 
-      - name: Wait for Frontend to be Ready
-        run: |
-          timeout 60 bash -c 'until curl -s http://localhost:4200 > /dev/null; do sleep 2; done' || echo "Frontend might not be fully ready"
-
       - name: Cache Maven dependencies
         uses: actions/cache@v4
         with:
@@ -78,15 +76,6 @@ jobs:
         working-directory: ./backend
         run: |
           mvn clean test -Dtest="**/unit/**/*Test"
-
-      - name: Stop Angular Frontend
-        if: always()
-        working-directory: ./frontend
-        run: |
-          if [ -f angular.pid ]; then
-            kill $(cat angular.pid) || true
-            rm angular.pid
-          fi
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4

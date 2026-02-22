@@ -1,8 +1,9 @@
 name: Docker image creation and push to Dockerhub on merge to main branch
 
 on:
-  workflow_dispatch:
-  
+  push:
+    branches:
+      - main
 jobs:
 
   create-push:
