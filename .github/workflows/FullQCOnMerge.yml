@@ -1,7 +1,9 @@
 name: Full Quality Control on Merge
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
@@ -47,6 +49,22 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
+      - name: Set up Node.js for Frontend Build
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build Frontend and Copy to Backend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          cd ..
+          mkdir -p backend/src/main/resources/public
+          cp -R frontend/dist/rarecips/browser/* backend/src/main/resources/public/
 
       - name: Wait for it
         run: |
@@ -125,6 +143,22 @@ jobs:
         run: |
           echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" > env.properties
           echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> env.properties
+
+      - name: Set up Node.js for Frontend Build
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build Frontend and Copy to Backend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          cd ..
+          mkdir -p backend/src/main/resources/public
+          cp -R frontend/dist/rarecips/browser/* backend/src/main/resources/public/
 
       - name: Wait for it
         run: |
