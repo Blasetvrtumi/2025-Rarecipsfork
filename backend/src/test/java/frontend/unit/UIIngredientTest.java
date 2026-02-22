@@ -36,13 +36,8 @@ public class UIIngredientTest extends BaseUnitTest {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     wait.until(ExpectedConditions.urlToBe("https://localhost:8443/"));
 
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("body")));
-
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Wait for the main page to load fully after login
+    wait.until(ExpectedConditions.urlToBe("https://localhost:8443/"));
   }
   @Test
   public void ingredientcrud() {
@@ -53,11 +48,7 @@ public class UIIngredientTest extends BaseUnitTest {
     driver.get("https://localhost:8443/ingredients");
     driver.manage().window().setSize(new Dimension(2047, 944));
 
-    try {
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Navigated to ingredients
 
     wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".nav-item:nth-child(4)"))).click();
 
@@ -80,32 +71,21 @@ public class UIIngredientTest extends BaseUnitTest {
     WebElement createBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn:nth-child(4)")));
     jsClick(createBtn);
 
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Wait for creation to process
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Test Ingredient ZZZ')]")));
 
     // ========== EDIT INGREDIENT ==========
     driver.get("https://localhost:8443/ingredients");
     driver.manage().window().setSize(new Dimension(2047, 944));
 
-    try {
-      Thread.sleep(1500);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Wait for page load
 
     wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".grid")));
 
     WebElement editBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".top-14 > .ti")));
     jsClick(editBtn);
 
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Wait for edit click to process
 
     WebElement foodInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("food")));
     foodInput.clear();
@@ -114,21 +94,14 @@ public class UIIngredientTest extends BaseUnitTest {
     WebElement saveBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn > span")));
     jsClick(saveBtn);
 
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Wait for save to complete before navigating again
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Updated Ingredient ZZZ')]")));
 
     // ========== DELETE INGREDIENT ==========
     driver.get("https://localhost:8443/ingredients");
     driver.manage().window().setSize(new Dimension(2047, 944));
 
-    try {
-      Thread.sleep(1500);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // After navigate
 
     wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".grid")));
 
@@ -141,19 +114,12 @@ public class UIIngredientTest extends BaseUnitTest {
     WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".top-2 > .ti")));
     jsClick(deleteBtn);
 
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Ready to confirm delete
 
     WebElement confirmBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".confirmDelete:nth-child(1) > .ti")));
     jsClick(confirmBtn);
 
-    try {
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // Verify delete by ensuring it is gone from the main list
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(), 'Updated Ingredient ZZZ')]")));
   }
 }
