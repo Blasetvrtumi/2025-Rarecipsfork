@@ -109,11 +109,7 @@ public class UIUserTest extends BaseUnitTest {
       Thread.currentThread().interrupt();
     }
 
-    {
-      WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".icon-btn")));
-      Actions builder = new Actions(driver);
-      builder.moveToElement(element).perform();
-    }
+
 
     wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".top-7"))).click();
 
