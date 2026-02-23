@@ -13,12 +13,12 @@
 - User profile management (Registered users)
 - User ingredient list management (registered users)
 - Recipe saving and bookmarking (Registered users)
-- Health report feedbacking (Registered users)
-- Stat tracking (Registered users)
 
 ## Intricate
 
 - User and content moderation (Admins)
 - User notifications through websockets (Registered users)
 - Analytics dashboard viewing (Admins)
+- Health report feedbacking (Registered users)
+- Stat tracking (Registered users)
 - Personalized recommendations (Registered users)

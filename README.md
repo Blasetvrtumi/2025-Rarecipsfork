@@ -36,13 +36,14 @@
 
 Rarecips is a progressive web application designed to help users discover, share, and manage unique and rare recipes from around the world. The platform allows users to browse, upload, review, and save recipes, fostering a community of culinary enthusiasts who can access personalized health reports and recommendations based on their culinary preferences.
 
+
 ## ✏️ Mockup
 <p align="center">
    <img src="readme-resources/mockup.png"/>
 </p>
 
 > **⚠️ Development Status**  
-> The project is currently in the development phase. Functional and technical objectives have been defined and development has begun, but implementation is not yet functional.
+> The project is currently in the development phase. Some functionalities may not be fully implemented or available yet.
 
 ## 📋 Documentation Index
 
@@ -53,4 +54,37 @@ Rarecips is a progressive web application designed to help users discover, share
 - [📈 Project Tracking](docs/sections/tracking.md)
 - [👤 Author](docs/sections/author.md)
 - [👨‍💻 Development Guide](docs/sections/devguide.md)
+
+## 🧩 Releases
+
+### Version 0.1 - Basic functionality (XX/02/2026)
+Includes basic and most intermediate features such as user authentication and profile management, recipe browsing and management and much more.
+This version marks the first minimally viable product (MVP) release of the application, providing core functionalities for users to interact with the platform and start building a community around rare recipes.
+It brings the first standalone bundled dockerized version of the application, allowing a OOTB use that includes a database, backend and frontend in a single deployment.
+
+- #### 0.1 Screenshots:
+
+                                                                              🖥️ Desktop                                            📱 Mobile
+<p align="center" height="260px">
+    <img width="45%" src="\readme-resources\01_Desktop_1.png" alt=""/>
+    <img height="260px" src="\readme-resources\01_Mobile_1.png" alt=""/>
+</p>
+<p align="center">
+    <img width="45%" src="\readme-resources\01_Desktop_2.png"/>
+    <img height="260px" src="\readme-resources\01_Mobile_2.png"/>
+</p>
+<p align="center">
+    <img width="45%" src="\readme-resources\01_Desktop_3.png" alt=""/>
+    <img height="260px" src="\readme-resources\01_Mobile_3.png" alt=""/>
+</p>
+<p align="center">
+    <img width="45%" src="\readme-resources\01_Desktop_4.png"/>
+    <img height="260px" src="\readme-resources\01_Mobile_4.png"/>
+</p>
+
+- #### Upcoming features:
+0.2 release is expected to include the remaining intermediate features, such as:
+  - Full recipe management (creation, editing, deletion)
+  - Full user profile management (editing, ingredient list management, etc.)
+
 
