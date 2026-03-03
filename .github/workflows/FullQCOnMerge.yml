@@ -1,7 +1,9 @@
 name: Full Quality Control on Merge
 
 on:
-  workflow_dispatch: 
+  pull_request:
+    branches:
+      - main
 
 jobs:
 

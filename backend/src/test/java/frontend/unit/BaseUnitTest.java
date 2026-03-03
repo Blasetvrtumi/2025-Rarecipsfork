@@ -22,8 +22,8 @@ public class BaseUnitTest {
     @BeforeEach
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.setAcceptInsecureCerts(true);
         options.addArguments("--headless");
+        options.setAcceptInsecureCerts(true);
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");

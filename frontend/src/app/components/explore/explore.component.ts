@@ -773,12 +773,14 @@ export class ExploreComponent implements OnInit {
             element.category = this.ingredientIconService.getCategoryFromIcon(element.icon);
             return element;
           });
+          this.totalIngredients = result.totalElements || 0;
           this.ingredientSearchHasMore = !result.last;
           try { this.cdr.detectChanges(); } catch(e) { }
           this.ingredientSearchLoading = false;
         },
         error: (error) => {
           this.ingredientResults = [];
+          this.totalIngredients = 0;
           this.ingredientSearchHasMore = false;
           this.ingredientSearchLoading = false;
         }
@@ -830,7 +832,8 @@ export class ExploreComponent implements OnInit {
     } else if (this.activeSearchTab === 'ingredients') {
       this.ingredientSearchLoading = true;
       this.currentIngredientPage = 0;
-      this.applyIngredientFilters();
+      this.ingredients = [];
+      this.loadIngredients();
     }
   }
 
@@ -989,6 +992,18 @@ export class ExploreComponent implements OnInit {
         this.userResults = result.users;
         this.totalUsers = result.total;
         this.hasMoreUsers = this.userResults.length < this.totalUsers;
+
+        this.userResults.forEach(u => {
+          this.userService.getUserCollections(u.username, 0, 1).subscribe({
+            next: (res) => {
+              u.collectionsCount = res.total;
+            },
+            error: () => {
+              u.collectionsCount = 0;
+            }
+          });
+        });
+
         this.userLoading = false;
       },
       error: (error) => {
@@ -1016,7 +1031,19 @@ export class ExploreComponent implements OnInit {
 
     this.userService.filterUsers(filterParams, this.currentUserPage, this.userPageSize).subscribe({
       next: (result) => {
-        this.userResults = [...this.userResults, ...result.users];
+        const newUsers = result.users;
+        newUsers.forEach((u: any) => {
+          this.userService.getUserCollections(u.username, 0, 1).subscribe({
+            next: (res) => {
+              u.collectionsCount = res.total;
+            },
+            error: () => {
+              u.collectionsCount = 0;
+            }
+          });
+        });
+        
+        this.userResults = [...this.userResults, ...newUsers];
         this.totalUsers = result.total;
         this.hasMoreUsers = this.userResults.length < this.totalUsers;
         this.loadingMoreUsers = false;
@@ -1107,7 +1134,32 @@ export class ExploreComponent implements OnInit {
   }
 
   loadMoreIngredientResults() {
-    this.loadMoreIngredients();
+    if (this.ingredientSearchQuery) {
+      if (this.ingredientSearchLoading || !this.ingredientSearchHasMore) return;
+      this.ingredientSearchLoading = true;
+      this.currentIngredientPage++;
+
+      this.ingredientService.searchIngredients(this.ingredientSearchQuery, this.currentIngredientPage, this.ingredientPageSize).subscribe({
+        next: (result: any) => {
+          const newIngredients = (result.content || []).map((element: Ingredient) => {
+            element.icon = this.ingredientIconService.getIconForIngredient(element.food);
+            element.category = this.ingredientIconService.getCategoryFromIcon(element.icon);
+            return element;
+          });
+          this.ingredientResults = [...this.ingredientResults, ...newIngredients];
+          this.totalIngredients = result.totalElements || 0;
+          this.ingredientSearchHasMore = !result.last;
+          try { this.cdr.detectChanges(); } catch(e) { }
+          this.ingredientSearchLoading = false;
+        },
+        error: (error) => {
+          console.error('Error loading more search ingredients:', error);
+          this.ingredientSearchLoading = false;
+        }
+      });
+    } else {
+      this.loadMoreIngredients();
+    }
   }
 
   loadUserIngredients(): void {
