@@ -33,6 +33,7 @@ export class ProfileViewComponent implements OnInit {
   activeTab: 'recipes' | 'reviews' | 'collections' | 'ingredients' = 'recipes';
 
   recipes: any[] = [];
+  totalRecipes: number = 0;
   reviews: any[] = [];
   ingredients: any[] = [];
   collections: any[] = [];
@@ -254,6 +255,7 @@ export class ProfileViewComponent implements OnInit {
       const response = await firstValueFrom(this.userService.getUserRecipes(this.username, this.recipesPage, 10));
       this.recipes = response.content;
       this.hasMoreRecipes = response.hasMore;
+      this.totalRecipes = response.total;
       this.recipesLoading = false;
       return response.content;
     } catch (error) {

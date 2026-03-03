@@ -9,6 +9,9 @@ services:
 
     container_name: rarecips-app
     image: blasetvrtumi/rarecips:0.1
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
     ports:
       - "8443:8443"
     depends_on:
@@ -18,6 +21,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://rarecips-DB:3306/rarecips
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
+    secrets:
+      - source: env_properties
+        target: /run/secrets/env.properties
 
   rarecips-DB:
     container_name: rarecips-DB
@@ -32,3 +38,7 @@ services:
 
 volumes:
   mysql:
+
+secrets:
+  env_properties:
+    file: ../backend/src/main/resources/env.properties
